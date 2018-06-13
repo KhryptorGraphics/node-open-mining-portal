@@ -89,6 +89,12 @@ module.exports = function(logger, poolConfig){
             typeof(shareData.error) === 'undefined' ? null : shareData.error,
             shareData.blockHash ? shareData.blockHash : (shareData.blockHashInvalid ? shareData.blockHashInvalid : '')
         ];
+
+        if(isNaN(shareData.shareDiff * (poolConfig.coin.mposDiffMultiplier || 1))){
+            dbData[4] = 0;
+        }
+
+        // TODO: This fails sometimes when the job is invalid
         connection.query(
             'INSERT INTO `shares` SET time = NOW(), rem_host = ?, username = ?, our_result = ?, upstream_result = ?, difficulty = ?, reason = ?, solution = ?',
             dbData,
