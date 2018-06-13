@@ -50,7 +50,7 @@
                 </tr>
                 </thead>
                 {{ for(var worker in it.stats.pools[pool].workers) { }}
-                  {{ if(worker == it.workerFilter ) { }}
+                  {{ if(!it.workerFilter || worker == it.workerFilter ) { }}
                    {{var workerstat = it.stats.pools[pool].workers[worker];}}
                     <tr class="pure-table-odd">
                         <td>{{=worker}}</td>
