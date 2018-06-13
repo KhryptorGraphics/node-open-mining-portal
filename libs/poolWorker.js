@@ -193,7 +193,7 @@ module.exports = function(logger){
                                 return;
                             }
 
-                            const isValid = body.data.result.list.length > 0;
+                            const isValid = body.data.list.length > 0;
                             authCallback(isValid);
                         });
                     });
