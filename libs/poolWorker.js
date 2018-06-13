@@ -396,9 +396,4 @@ module.exports = function(logger){
             }
         });
     };
-
-    this._getPoolMnemonic(poolId)
-    {
-
-    }
 };
