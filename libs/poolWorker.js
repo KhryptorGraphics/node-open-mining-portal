@@ -146,7 +146,7 @@ module.exports = function(logger){
                         return;
                     }
                     const authSettings = poolOptions.validateWorkerSettings;
-                    if (!authSettings.apiRoot || !authSettings.poolId || !authSettings.email || !authSettings.password) {
+                    if (!authSettings.apiRoot || !authSettings.email || !authSettings.password) {
                         // required settings are missing
                         authCallback(false);
                         logger.error(logSystem, logComponent, logSubCat, 'worker validation settings are missing required values');
