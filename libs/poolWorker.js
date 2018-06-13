@@ -195,7 +195,7 @@ module.exports = function(logger){
 
                             const isValid = body.data.list.length > 0;
                             if(!isValid) {
-                                logger.info(logSystem, logComponent, logSubCat, 'Miner attempted connection, but failed to pass validation tests: ' + workerName);
+                                logger.debug(logSystem, logComponent, logSubCat, 'Miner attempted connection, but failed to pass validation tests: ' + workerName);
                             }
                             authCallback(isValid);
                         });
