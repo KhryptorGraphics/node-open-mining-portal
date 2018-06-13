@@ -187,7 +187,7 @@ module.exports = function(logger){
                                 return;
                             }
 
-                            if (response.statusCode !== 200 || !body.data || !body.data.result || !Array.isArray(body.data.result.list)) {
+                            if (response.statusCode !== 200 || !body.data || !body.data || !Array.isArray(body.data.list)) {
                                 logger.error(logSystem, logComponent, logSubCat, 'Unable to determine if miner address is valid: ' + response.statusCode + ' ' + JSON.stringify(body, null, '  '));
                                 authCallback(false);
                                 return;
