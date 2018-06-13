@@ -8,7 +8,6 @@ var os = require('os');
 
 var algos = require('stratum-pool/lib/algoProperties.js');
 
-
 module.exports = function(logger, portalConfig, poolConfigs){
 
     var _this = this;

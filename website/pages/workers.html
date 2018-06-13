@@ -34,7 +34,6 @@
 
 
 <div id="topCharts">
-
 {{ for(var pool in it.stats.pools) { }}
 
     <div class="chartWrapper">
@@ -51,6 +50,7 @@
                 </tr>
                 </thead>
                 {{ for(var worker in it.stats.pools[pool].workers) { }}
+                  {{ if(!it.workerFilter || worker == it.workerFilter ) { }}
                    {{var workerstat = it.stats.pools[pool].workers[worker];}}
                     <tr class="pure-table-odd">
                         <td>{{=worker}}</td>
@@ -59,6 +59,7 @@
                         <td>{{? workerstat.shares > 0}} {{=Math.floor(10000 * workerstat.shares / (workerstat.shares + workerstat.invalidshares)) / 100}}% {{??}} 0% {{?}}</td>
                         <td>{{=workerstat.hashrateString}}</td>
                     </tr>
+                  {{ } }}
                 {{ } }}
             </table>
         </div>

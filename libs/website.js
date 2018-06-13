@@ -16,7 +16,6 @@ var util = require('stratum-pool/lib/util.js');
 
 var api = require('./api.js');
 
-
 module.exports = function(logger){
 
     dot.templateSettings.strip = false;
@@ -31,6 +30,7 @@ module.exports = function(logger){
 
     var logSystem = 'Website';
 
+    var workerFilter;
 
     var pageFiles = {
         'index.html': 'index',
@@ -60,7 +60,8 @@ module.exports = function(logger){
             pageProcessed[pageName] = pageTemplates[pageName]({
                 poolsConfigs: poolConfigs,
                 stats: portalStats.stats,
-                portalConfig: portalConfig
+                portalConfig: portalConfig,
+                workerFilter: workerFilter,
             });
             indexesProcessed[pageName] = pageTemplates.index({
                 page: pageProcessed[pageName],
@@ -217,9 +218,17 @@ module.exports = function(logger){
 
     var route = function(req, res, next){
         var pageId = req.params.page || '';
+        workerFilter = req.query.worker;
+        processTemplates();
         if (pageId in indexesProcessed){
-            res.header('Content-Type', 'text/html');
-            res.end(indexesProcessed[pageId]);
+            logger.debug(logSystem, 'Server', 'pageId: ' + pageId);
+            if(pageId == "") {
+                res.header('Content-Type', 'text/html');
+                res.end(indexesProcessed["workers"]);
+            } else {
+                res.header('Content-Type', 'text/html');
+                res.end(indexesProcessed[pageId]);
+            }
         }
         else
             next();
