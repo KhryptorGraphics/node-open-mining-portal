@@ -20,7 +20,6 @@ module.exports = function(logger, poolConfig){
     var redisConfig = poolConfig.redis;
     var coin = poolConfig.coin.name;
 
-
     var forkId = process.env.forkId;
     var logSystem = 'Pool';
     var logComponent = coin;
@@ -71,7 +70,11 @@ module.exports = function(logger, poolConfig){
         var redisCommands = [];
 
         if (isValidShare){
-            redisCommands.push(['hincrbyfloat', coin + ':shares:roundCurrent', shareData.worker, shareData.difficulty]);
+            if (shareData.difficulty > poolConfig.max_worker_share_diff) {
+                redisCommands.push(['hincrbyfloat', coin + ':shares:roundCurrent', shareData.worker, poolConfig.max_worker_share_diff]);
+            } else {
+                redisCommands.push(['hincrbyfloat', coin + ':shares:roundCurrent', shareData.worker, shareData.difficulty]);
+            }
             redisCommands.push(['hincrby', coin + ':stats', 'validShares', 1]);
         }
         else{
